@@ -1,0 +1,43 @@
+/* Auth pages styling */
+:root{ --primary:#0d6efd; --bg1:#f8f9ff; --bg2:#eef2ff; }
+body.auth-bg{
+  min-height:100vh; background: linear-gradient(135deg, var(--bg1), var(--bg2));
+}
+.auth-card{
+  border: 0; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.auth-card .row{ --bs-gutter-x:0; }
+.auth-hero{
+  background: linear-gradient(160deg, #0d6efd, #4e8cff);
+  color:#fff; height:100%; border-top-left-radius:16px; border-bottom-left-radius:16px;
+  display:flex; flex-direction:column; justify-content:center; padding:2rem;
+}
+.auth-hero .tag{ background: rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25); color:#fff; padding:.35rem .6rem; border-radius:999px; font-size:.8rem; display:inline-flex; align-items:center; gap:.35rem }
+.auth-hero .headline{ font-weight:700; line-height:1.2; margin:1rem 0; }
+.auth-hero .features{ list-style:none; padding:0; margin:0; opacity:.9 }
+.auth-hero .features li{ display:flex; align-items:center; gap:.5rem; margin:.35rem 0; }
+.auth-hero .features .ico{ width:26px; height:26px; display:grid; place-items:center; background:rgba(255,255,255,.15); border-radius:6px; }
+
+.brand{ display:flex; align-items:center; justify-content:center; gap:.5rem; }
+.brand .logo{
+  width:44px; height:44px; border-radius:10px; display:grid; place-items:center;
+  background:#eef5ff; color:var(--primary); border:1px solid #e7efff;
+}
+.brand .name{ font-weight: 700; letter-spacing: .3px; }
+.form-title{ font-weight:600; }
+.small-muted{ font-size:.9rem; color:#6c757d; }
+.input-group-text{ background:#fff; }
+.password-toggle{ cursor:pointer; }
+.alert{ border-radius:10px; }
+.auth-footer{ color:#6c757d; font-size:.85rem; }
+
+/* Password strength meter */
+.pw-strength{ display:flex; gap:6px; margin-top:.5rem; }
+.pw-strength .bar{ flex:1; height:6px; border-radius:999px; background:#e9ecef; }
+.pw-strength .bar.on-1:nth-child(1){ background:#dc3545 }
+.pw-strength .bar.on-2:nth-child(-n+2){ background:#fd7e14 }
+.pw-strength .bar.on-3:nth-child(-n+3){ background:#ffc107 }
+.pw-strength .bar.on-4:nth-child(-n+4){ background:#28a745 }
+.pw-hints{ font-size:.85rem; color:#6c757d; }
+.pw-hints .ok{ color:#198754 }
+.caps-ind{ font-size:.85rem; color:#6c757d }

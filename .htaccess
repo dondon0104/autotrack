@@ -1,0 +1,24 @@
+AddDefaultCharset UTF-8
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Set the base directory for rewrites
+    RewriteBase /web2/final_project/car_rental/
+    
+    # Deny access to sensitive directories
+    RedirectMatch 403 ^/web2/final_project/car_rental/(app|scheme|console|runtime)/
+    
+    # Deny access to sensitive files
+    <FilesMatch "\.(env|json|xml|log|md|lock|git|ini|bak|sql)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    # Rewrite all requests to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+    
+    # Prevent directory browsing
+    Options -Indexes
+</IfModule>
