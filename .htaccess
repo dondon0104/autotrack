@@ -19,8 +19,8 @@ AddDefaultCharset UTF-8
     RewriteCond %{REQUEST_FILENAME} !-d
     # Don't rewrite requests that already target index.php to avoid loops
     RewriteCond %{REQUEST_URI} !^/index\.php
-    # Pass the original path as PATH_INFO to index.php
-    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+    # Main rewrite: send everything except real files/dirs to index.php
+    RewriteRule ^ index.php [QSA,L]
     
     # Prevent directory browsing
     Options -Indexes
