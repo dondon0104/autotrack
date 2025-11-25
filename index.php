@@ -1,4 +1,9 @@
 <?php
+echo '<pre>';
+echo 'APP_DIR: ' . APP_DIR . PHP_EOL;
+echo 'autoload exists: ' . (file_exists(APP_DIR . 'vendor/autoload.php') ? 'yes' : 'no') . PHP_EOL;
+echo '</pre>';
+
 define('PREVENT_DIRECT_ACCESS', TRUE);
 /**
  * ------------------------------------------------------------------
