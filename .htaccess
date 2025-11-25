@@ -2,11 +2,11 @@ AddDefaultCharset UTF-8
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # Set the base directory for rewrites
-    RewriteBase /web2/final_project/car_rental/
+    # Set the base directory for rewrites (root)
+    RewriteBase /
     
-    # Deny access to sensitive directories
-    RedirectMatch 403 ^/web2/final_project/car_rental/(app|scheme|console|runtime)/
+    # Deny access to sensitive directories (relative to the web root)
+    RedirectMatch 403 ^/(app|scheme|console|runtime)/
     
     # Deny access to sensitive files
     <FilesMatch "\.(env|json|xml|log|md|lock|git|ini|bak|sql)$">
@@ -14,6 +14,9 @@ AddDefaultCharset UTF-8
         Deny from all
     </FilesMatch>
     
+    # Serve favicon (and other explicitly existing files) directly to avoid rewrite loops
+    RewriteRule ^favicon\.svg$ - [L]
+
     # Rewrite all requests to index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
