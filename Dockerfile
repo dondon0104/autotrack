@@ -19,6 +19,9 @@ RUN echo '<Directory /var/www/html/public>\n    AllowOverride All\n    Require a
 RUN sed -i 's#DocumentRoot /var/www/html#DocumentRoot /var/www/html/public#' /etc/apache2/sites-available/000-default.conf
 RUN sed -i 's#<Directory /var/www/html/>#<Directory /var/www/html/public/>#' /etc/apache2/apache2.conf
 
+# Set DirectoryIndex for public directory
+RUN echo 'DirectoryIndex index.php index.html' >> /etc/apache2/apache2.conf
+
 # Copy app files
 COPY . /var/www/html/
 
