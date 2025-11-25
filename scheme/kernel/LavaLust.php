@@ -67,6 +67,8 @@ if ($composer_autoload = config_item('composer_autoload'))
 	}
 	else
 	{
+		// Specific path logging: log which $composer_autoload value caused this branch
+		error_log("[LavaLust] Composer autoload path invalid. composer_autoload=" . var_export($composer_autoload, TRUE) . " REQUEST_URI=" . ($_SERVER['REQUEST_URI'] ?? 'unknown'));
 		show_404('404 Not Found', 'Composer config file not found.');
 	}
 }
