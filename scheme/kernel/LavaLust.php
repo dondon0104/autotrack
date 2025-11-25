@@ -163,9 +163,39 @@ function lava_instance()
 $performance->stop('lavalust');
 
 // Handle the request
-$url = $router->sanitize_url(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['PHP_SELF']));
+// Resolve URL robustly using PATH_INFO, then REQUEST_URI, then PHP_SELF fallback.
 $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : '';
-// Log resolved URL and method for debugging
-error_log("[LavaLust] Resolved URL='" . $url . "' METHOD=" . $method . " SCRIPT_NAME='" . ($_SERVER['SCRIPT_NAME'] ?? '') . "' PHP_SELF='" . ($_SERVER['PHP_SELF'] ?? '') . "' REQUEST_URI='" . ($_SERVER['REQUEST_URI'] ?? '') . "'");
+
+// Preferred: PATH_INFO (set by webserver when using index.php/segment)
+$resolved = '';
+if (!empty($_SERVER['PATH_INFO'])) {
+	$resolved = $_SERVER['PATH_INFO'];
+} else {
+	// REQUEST_URI contains the path + query — strip query
+	$req = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+	$script = $_SERVER['SCRIPT_NAME'] ?? '';
+
+	// If request starts with script name, strip it
+	if ($script && strpos($req, $script) === 0) {
+		$resolved = substr($req, strlen($script));
+	} else {
+		// Try stripping directory of script (useful when index.php is in web root)
+		$script_dir = rtrim(dirname($script), '\\/');
+		if ($script_dir !== '' && $script_dir !== '/' && strpos($req, $script_dir) === 0) {
+			$resolved = substr($req, strlen($script_dir));
+		} else {
+			// Fallback to PHP_SELF subtraction as last resort
+			$php_self = $_SERVER['PHP_SELF'] ?? '';
+			if ($php_self && strpos($php_self, $script) === 0) {
+				$resolved = str_replace($script, '', $php_self);
+			} else {
+				$resolved = $req;
+			}
+		}
+	}
+}
+
+$url = $router->sanitize_url($resolved ?: '/');
+error_log("[LavaLust] Resolved URL='" . $url . "' METHOD=" . $method . " SCRIPT_NAME='" . ($_SERVER['SCRIPT_NAME'] ?? '') . "' PHP_SELF='" . ($_SERVER['PHP_SELF'] ?? '') . "' REQUEST_URI='" . ($_SERVER['REQUEST_URI'] ?? '') . "' PATH_INFO='" . ($_SERVER['PATH_INFO'] ?? '') . "'");
 $router->initiate($url, $method);
 ?>
