@@ -12,6 +12,9 @@ RUN echo 'AcceptPathInfo On' >> /etc/apache2/apache2.conf
 # Allow .htaccess overrides
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
+# Explicitly allow .htaccess in /var/www/html/public
+RUN echo '<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n</Directory>' >> /etc/apache2/apache2.conf
+
 # Copy app files
 COPY . /var/www/html/
 
