@@ -55,6 +55,9 @@ if ($composer_autoload = config_item('composer_autoload'))
 		if (file_exists(APP_DIR . 'vendor/autoload.php')) {
 			require_once(APP_DIR . 'vendor/autoload.php');
 		} else {
+			// Log details for debugging (temporary)
+			$req = $_SERVER['REQUEST_URI'] ?? 'unknown';
+			error_log("[LavaLust] Composer autoload missing. APP_DIR=" . APP_DIR . " vendor/autoload.php exists?=" . (file_exists(APP_DIR . 'vendor/autoload.php') ? 'yes' : 'no') . " REQUEST_URI=" . $req);
 			show_404('404 Not Found', 'Composer config file not found.');
 		}
 	}
