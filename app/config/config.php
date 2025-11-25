@@ -79,32 +79,7 @@ $config['ENVIRONMENT']             = 'production';
 | WARNING: You MUST set this value!
 |
 */
-// Dynamically determine base_url for local vs deployed environments.
-// If running on localhost or a direct IP, use the current host; otherwise keep the deployed URL.
-// You can override via APP_BASE_URL env var.
-try {
-    $deployedUrl = 'https://autotrack-1kse.onrender.com';
-    $envBase = getenv('APP_BASE_URL');
-
-    $isCli = (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg');
-    $host = $_SERVER['HTTP_HOST'] ?? '';
-    $isLocalHost = stripos($host, 'localhost') !== false || preg_match('/^\d{1,3}(?:\.\d{1,3}){3}$/', $host);
-
-    if ($envBase) {
-        $config['base_url'] = rtrim($envBase, '/') . '/';
-    } elseif (!$isCli && $host) {
-        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-        $path = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME'] ?? '/'), '/');
-        $computed = $scheme . '://' . $host . ($path ? $path . '/' : '/');
-        $config['base_url'] = $isLocalHost ? $computed : $deployedUrl;
-    } else {
-        // Fallback when running from CLI or host is not available
-        $config['base_url'] = $deployedUrl;
-    }
-} catch (Throwable $e) {
-    // On any error, fall back to deployed URL
-    $config['base_url'] = 'https://autotrack-1kse.onrender.com';
-}
+$config['base_url'] 				= 'https://autotrack-1kse.onrender.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -139,14 +114,21 @@ $config['log_dir']                  = 'runtime/logs/';
 |--------------------------------------------------------------------------
 |
 | Enabling this setting will tell LavaLust to look for a Composer
-| package auto-loader script in app/vendor/autoload.php only.
+| package auto-loader script in app/vendor/autoload.php.
+|
+|	$config['composer_autoload'] = TRUE;
+|
+| Or if you have your vendor/ directory located somewhere else, you
+| can opt to set a specific path as well:
+|
+|	$config['composer_autoload'] = '/path/to/vendor/autoload.php';
+|
 | For more information about Composer, please visit http://getcomposer.org/
+|
 | Note: This will NOT disable or override the LavaLust-specific
-| autoloading (app/config/autoload.php)
+|	autoloading (app/config/autoload.php)
 */
-$config['composer_autoload']        = (
-    defined('APP_DIR') && file_exists(APP_DIR . 'vendor/autoload.php')
-) ? TRUE : FALSE; // Use Composer autoload only when app/vendor/autoload.php exists
+$config['composer_autoload']        = TRUE; // Looks for app/vendor/autoload.php
 
 /*
 |--------------------------------------------------------------------------
@@ -309,9 +291,9 @@ $config['gcash_number']             = '09859901565';
 */
 $config['gcash_provider']           = 'paymongo'; // 'paymongo' or 'xendit'
 $config['gcash_mode']               = 'api'; // 'api' or 'manual'
-$config['paymongo_public_key']      = getenv('PAYMONGO_PUBLIC_KEY') ?: '';
-$config['paymongo_secret_key']      = getenv('PAYMONGO_SECRET_KEY') ?: '';
-$config['paymongo_webhook_secret']  = getenv('PAYMONGO_WEBHOOK_SECRET') ?: '';
+$config['paymongo_public_key']      = '';//'pk_test_FEF2AZMz4FDxQ3TLbQLVNvqh';
+$config['paymongo_secret_key']      = '';//'sk_test_oRm4i3KtkFYHUzGZJVjZS6xR';
+$config['paymongo_webhook_secret']  = '';//'whsk_tVS8f1VhkpfdEBdX2XeaBrGS';
 
 /*
 |--------------------------------------------------------------------------

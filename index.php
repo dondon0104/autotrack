@@ -78,13 +78,6 @@ define('SYSTEM_DIR', ROOT_DIR . $system_path . DIRECTORY_SEPARATOR);
 define('APP_DIR', ROOT_DIR . $application_folder . DIRECTORY_SEPARATOR);
 define('PUBLIC_DIR', $public_folder);
 
-// Log request and autoload state to server error log (non-invasive)
-if (php_sapi_name() !== 'cli') {
-	$req = $_SERVER['REQUEST_URI'] ?? 'unknown';
-	error_log("[app-start] REQUEST=" . $req . " APP_DIR=" . APP_DIR . " vendor_exists=" . (file_exists(APP_DIR . 'vendor/autoload.php') ? 'yes' : 'no') );
-}
-
-
 /*
  * ------------------------------------------------------
  * Setup done? Then Hurray!
