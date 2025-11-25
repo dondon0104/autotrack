@@ -1,6 +1,6 @@
 .DS_Store
 
-app/vendor/*
+# app/vendor/*
 
 runtime/*
 !runtime/.htaccess
