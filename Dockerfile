@@ -6,6 +6,9 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Ensure Apache passes PATH_INFO to PHP for proper routing
+RUN echo 'AcceptPathInfo On' >> /etc/apache2/apache2.conf
+
 # Allow .htaccess overrides
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
