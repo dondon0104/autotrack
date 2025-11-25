@@ -78,11 +78,6 @@ define('SYSTEM_DIR', ROOT_DIR . $system_path . DIRECTORY_SEPARATOR);
 define('APP_DIR', ROOT_DIR . $application_folder . DIRECTORY_SEPARATOR);
 define('PUBLIC_DIR', $public_folder);
 
-// DEBUG: Print APP_DIR and whether autoload exists (remove after debugging)
-echo '<pre>';
-echo 'APP_DIR: ' . APP_DIR . PHP_EOL;
-echo 'autoload exists: ' . (file_exists(APP_DIR . 'vendor/autoload.php') ? 'yes' : 'no') . PHP_EOL;
-echo '</pre>';
 
 /*
  * ------------------------------------------------------
