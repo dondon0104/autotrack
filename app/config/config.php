@@ -144,7 +144,9 @@ $config['log_dir']                  = 'runtime/logs/';
 | Note: This will NOT disable or override the LavaLust-specific
 | autoloading (app/config/autoload.php)
 */
-$config['composer_autoload']        = TRUE; // Only app/vendor/autoload.php will be used
+$config['composer_autoload']        = (
+    defined('APP_DIR') && file_exists(APP_DIR . 'vendor/autoload.php')
+) ? TRUE : FALSE; // Use Composer autoload only when app/vendor/autoload.php exists
 
 /*
 |--------------------------------------------------------------------------
