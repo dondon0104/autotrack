@@ -28,14 +28,19 @@ RUN apt-get update \
     && apt-get install -y curl unzip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copy app files
+# Copy project files into the image
 COPY . /var/www/html/
 
-# Install PHP dependencies in /var/www/html/app
-RUN composer install --no-dev --optimize-autoloader --working-dir=/var/www/html/app
+# Install PHP dependencies at root if composer.json exists (optional)
+# This ensures both top-level and app-level dependencies are installed when present.
+RUN if [ -f /var/www/html/composer.json ]; then \
+            composer install --no-dev --optimize-autoloader --no-interaction --no-progress --working-dir=/var/www/html; \
+        else echo "no root composer.json, skipping root composer install"; fi
 
-# Copy app files
-COPY . /var/www/html/
+# Install PHP dependencies in /var/www/html/app (app/composer.json should exist)
+RUN if [ -f /var/www/html/app/composer.json ]; then \
+            composer install --no-dev --optimize-autoloader --no-interaction --no-progress --working-dir=/var/www/html/app; \
+        else echo "no app composer.json, skipping app composer install"; fi
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html \
