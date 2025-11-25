@@ -316,8 +316,8 @@ $config['gcash_number']             = '09859901565';
 */
 $config['gcash_provider']           = 'paymongo'; // 'paymongo' or 'xendit'
 $config['gcash_mode']               = 'api'; // 'api' or 'manual'
-$config['paymongo_public_key']      = 'pk_test_FEF2AZMz4FDxQ3TLbQLVNvqh';
-$config['paymongo_secret_key']      = 'sk_test_oRm4i3KtkFYHUzGZJVjZS6xR';
+$config['paymongo_public_key']      = getenv('PAYMONGO_PUBLIC_KEY') ?: '';
+$config['paymongo_secret_key']      = getenv('PAYMONGO_SECRET_KEY') ?: '';
 $config['paymongo_webhook_secret']  = 'whsk_tVS8f1VhkpfdEBdX2XeaBrGS';
 
 /*
