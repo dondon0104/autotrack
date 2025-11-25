@@ -14,10 +14,10 @@ AddDefaultCharset UTF-8
         Deny from all
     </FilesMatch>
     
-    # Rewrite all requests to index.php
+    # Rewrite all requests to index.php (send PATH_INFO without causing internal redirects)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+    RewriteRule ^(.*)$ index.php [L,QSA]
     
     # Prevent directory browsing
     Options -Indexes
