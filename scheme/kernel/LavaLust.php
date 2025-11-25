@@ -165,5 +165,7 @@ $performance->stop('lavalust');
 // Handle the request
 $url = $router->sanitize_url(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['PHP_SELF']));
 $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : '';
+// Log resolved URL and method for debugging
+error_log("[LavaLust] Resolved URL='" . $url . "' METHOD=" . $method . " SCRIPT_NAME='" . ($_SERVER['SCRIPT_NAME'] ?? '') . "' PHP_SELF='" . ($_SERVER['PHP_SELF'] ?? '') . "' REQUEST_URI='" . ($_SERVER['REQUEST_URI'] ?? '') . "'");
 $router->initiate($url, $method);
 ?>
