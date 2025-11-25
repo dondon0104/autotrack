@@ -83,7 +83,7 @@ $config['ENVIRONMENT']             = 'production';
 // If running on localhost or a direct IP, use the current host; otherwise keep the deployed URL.
 // You can override via APP_BASE_URL env var.
 try {
-    $deployedUrl = 'https://autotrack-wetd.onrender.com/';
+    $deployedUrl = 'https://autotrack-1kse.onrender.com';
     $envBase = getenv('APP_BASE_URL');
 
     $isCli = (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg');
@@ -103,7 +103,7 @@ try {
     }
 } catch (Throwable $e) {
     // On any error, fall back to deployed URL
-    $config['base_url'] = 'https://autotrack-wetd.onrender.com/';
+    $config['base_url'] = 'https://autotrack-1kse.onrender.com';
 }
 
 /*
