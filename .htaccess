@@ -3,7 +3,7 @@ AddDefaultCharset UTF-8
     RewriteEngine On
     
     # Set the base directory for rewrites
-    RewriteBase /web2/final_project/car_rental/
+    RewriteBase /
     
     # Deny access to sensitive directories
     RedirectMatch 403 ^/web2/final_project/car_rental/(app|scheme|console|runtime)/
