@@ -309,7 +309,7 @@ $config['gcash_provider']           = 'paymongo'; // 'paymongo' or 'xendit'
 $config['gcash_mode']               = 'api'; // 'api' or 'manual'
 $config['paymongo_public_key']      = getenv('PAYMONGO_PUBLIC_KEY') ?: '';
 $config['paymongo_secret_key']      = getenv('PAYMONGO_SECRET_KEY') ?: '';
-$config['paymongo_webhook_secret']  = 'whsk_tVS8f1VhkpfdEBdX2XeaBrGS';
+$config['paymongo_webhook_secret']  = getenv('PAYMONGO_WEBHOOK_SECRET') ?: '';
 
 /*
 |--------------------------------------------------------------------------
