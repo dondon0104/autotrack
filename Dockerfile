@@ -22,6 +22,12 @@ RUN sed -i 's#<Directory /var/www/html/>#<Directory /var/www/html/public/>#' /et
 # Set DirectoryIndex for public directory
 RUN echo 'DirectoryIndex index.php index.html' >> /etc/apache2/apache2.conf
 
+# Install Composer and PHP dependencies
+RUN apt-get update \
+    && apt-get install -y curl unzip \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install --no-dev --optimize-autoloader --working-dir=/var/www/html/app
+
 # Copy app files
 COPY . /var/www/html/
 
