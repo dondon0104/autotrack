@@ -52,24 +52,9 @@ if ($composer_autoload = config_item('composer_autoload'))
 {
 	if ($composer_autoload === TRUE)
 	{
-		$autoloadPaths = array(
-			APP_DIR . 'vendor/autoload.php',
-			ROOT_DIR . 'vendor/autoload.php'
-		);
-
-		$autoloadIncluded = FALSE;
-		foreach ($autoloadPaths as $autoloadPath)
-		{
-			if (file_exists($autoloadPath))
-			{
-				require_once $autoloadPath;
-				$autoloadIncluded = TRUE;
-				break;
-			}
-		}
-
-		if ($autoloadIncluded === FALSE)
-		{
+		if (file_exists(APP_DIR . 'vendor/autoload.php')) {
+			require_once(APP_DIR . 'vendor/autoload.php');
+		} else {
 			show_404('404 Not Found', 'Composer config file not found.');
 		}
 	}
